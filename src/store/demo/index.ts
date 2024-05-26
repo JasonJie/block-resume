@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
-import { BasicInfoType } from "@/pages/Demo/type";
+import { BasicInfoType } from "@/pages/resume/type";
 import { FieldUnion } from "@/common/type";
 
 interface BasicInfoStoreType {

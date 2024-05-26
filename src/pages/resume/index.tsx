@@ -1,14 +1,11 @@
 import React from "react";
 import { useRequest } from "ahooks";
 import demoApi from "@/api/demo";
-import EditResumePage from "@/pages/Demo/components/edit-resume";
-import RenderResumePage from "@/pages/Demo/components/render-resume";
-
-const Demo = () => {
+import EditResumePage from "@/pages/resume/components/edit-resume";
+import RenderResumePage from "@/pages/resume/components/render-resume";
+const Resume = () => {
     const { data } = useRequest(demoApi.getDemo);
-
     console.log(data);
-
     return (
         <div className=" flex">
             <div className="flex-1">
@@ -20,6 +17,6 @@ const Demo = () => {
         </div>
     );
 };
-const DemoPage = React.memo(Demo);
+const ResumePage = React.memo(Resume);
 
-export default DemoPage;
+export default ResumePage;

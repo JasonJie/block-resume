@@ -1,12 +1,12 @@
 import { ConfigProvider } from "antd";
-import Demo from "@/pages/Demo";
+import ResumePage from "@/pages/resume";
 
 import zhCN from "antd/locale/zh_CN";
 
 const App = () => {
     return (
         <ConfigProvider locale={zhCN}>
-            <Demo />
+            <ResumePage />
         </ConfigProvider>
     );
 };
