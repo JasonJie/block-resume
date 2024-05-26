@@ -18,7 +18,7 @@ interface BasicInfoFormType {
     wechat: string;
 }
 
-const EditResume: React.FC = () => {
+const BasicInfo: React.FC = () => {
     const [from] = Form.useForm();
     const { setBasicInfo } = useDemoStore((state) => ({
         setBasicInfo: state.setBasicInfo,
@@ -141,5 +141,5 @@ const EditResume: React.FC = () => {
     );
 };
 
-const EditResumePage = React.memo(EditResume);
-export default EditResumePage;
+const BasicInfoPage = React.memo(BasicInfo);
+export default BasicInfoPage;
