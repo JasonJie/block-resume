@@ -15,7 +15,11 @@ const RenderResume: React.FC = () => {
         }
     }, [PAGE_STYLE]);
 
-    return <div className="p-5">{switchPageStyle}</div>;
+    return (
+        <div className="p-5 bg-gray-100 min-h-screen-100">
+            {switchPageStyle}
+        </div>
+    );
 };
 
 const RenderResumePage = React.memo(RenderResume);

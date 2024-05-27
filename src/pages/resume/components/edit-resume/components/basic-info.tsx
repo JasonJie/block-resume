@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Row, Col, DatePicker } from "antd";
-import AntdInput from "@/components/AntdInput";
+import { AntdInput } from "@/components";
 import { FieldUnion } from "@/common/type";
 import { useDemoStore } from "@/store";
 import dayjs from "dayjs";
