@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRequest } from "ahooks";
-import demoApi from "@/api/demo";
+import resumeApi from "@/api/resume";
 import EditResumePage from "@/pages/resume/components/edit-resume";
 import RenderResumePage from "@/pages/resume/components/render-resume";
 const Resume = () => {
-    const { data } = useRequest(demoApi.getDemo);
-    console.log(data);
+    const resumes = useRequest(resumeApi.getResumes, {
+        manual: true,
+    });
+
+    useEffect(() => {
+        console.log(resumes.data);
+    }, [resumes.data]);
+
+    useEffect(() => {
+        resumes.run(1);
+    }, []);
     return (
         <div className=" flex">
             <div className="flex-1">

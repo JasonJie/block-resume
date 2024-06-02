@@ -1,2 +1,2 @@
-export * as demoApi from "./demo";
+export * as resumeApi from "./resume";
 export * from "./type";
