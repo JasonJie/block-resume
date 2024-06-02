@@ -15,6 +15,9 @@ module.exports = {
                 "screen-50": "50vw",
                 112: "28rem",
             },
+            backgroundImage: {
+                "login-bg": "url('/src/assets/login-bg.jpg')",
+            },
         },
     },
     plugins: [],
