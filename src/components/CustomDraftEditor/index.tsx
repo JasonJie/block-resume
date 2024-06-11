@@ -1,90 +1,45 @@
-import React, { useState } from "react";
-import {
-    Editor,
-    EditorState,
-    RichUtils,
-    getDefaultKeyBinding,
-    DraftHandleValue,
-} from "draft-js";
-import "draft-js/dist/Draft.css";
+import React, { Component, useEffect, useState } from "react";
+import { EditorState, convertToRaw, ContentState } from "draft-js";
+import { Editor } from "react-draft-wysiwyg";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
+import "./index.css";
 
-// const { hasCommandModifier } = KeyBindingUtil;
+const EditorPage = () => {
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
-const CustomDraftEditor: React.FC = () => {
-    const [editorState, setEditorState] = useState<EditorState>(
-        EditorState.createEmpty()
+  useEffect(() => {
+    const testContent =
+      "<p>测试一下测试一下</p><p>换行p</p><p><strong><em>加粗</em></strong></p>";
+    const blocksFromHtml = htmlToDraft(testContent);
+    const { contentBlocks, entityMap } = blocksFromHtml;
+    const contentState = ContentState.createFromBlockArray(
+      contentBlocks,
+      entityMap
     );
+    const editorState = EditorState.createWithContent(contentState);
+    setEditorState(editorState);
+  }, []);
 
-    const onChange = (newEditorState: EditorState) => {
-        setEditorState(newEditorState);
-    };
+  const onEditorStateChange = (editorState: any) => {
+    setEditorState(editorState);
+  };
 
-    const handleKeyCommand = (
-        command: string,
-        editorState: EditorState
-    ): DraftHandleValue => {
-        const newState = RichUtils.handleKeyCommand(editorState, command);
-
-        if (newState) {
-            onChange(newState);
-            return "handled";
-        }
-
-        return "not-handled";
-    };
-
-    const mapKeyToEditorCommand = (e: React.KeyboardEvent): string | null => {
-        if (e.keyCode === 9 /* TAB */) {
-            const newEditorState = RichUtils.onTab(e, editorState, 4);
-            if (newEditorState !== editorState) {
-                onChange(newEditorState);
-            }
-            return null;
-        }
-
-        return getDefaultKeyBinding(e);
-    };
-
-    const toggleInlineStyle = (style: string) => {
-        onChange(RichUtils.toggleInlineStyle(editorState, style));
-    };
-
-    const toggleBlockType = (blockType: string) => {
-        onChange(RichUtils.toggleBlockType(editorState, blockType));
-    };
-
-    return (
-        <div>
-            <div>
-                <button onClick={() => toggleInlineStyle("BOLD")}>Bold</button>
-                <button onClick={() => toggleInlineStyle("ITALIC")}>
-                    Italic
-                </button>
-                <button onClick={() => toggleBlockType("unordered-list-item")}>
-                    Bullet List
-                </button>
-                <button onClick={() => toggleBlockType("ordered-list-item")}>
-                    Numbered List
-                </button>
-                <button onClick={() => toggleInlineStyle("FONT_SIZE_24")}>
-                    Size 24
-                </button>
-            </div>
-            <div
-                style={{
-                    border: "1px solid black",
-                    minHeight: "6em",
-                    cursor: "text",
-                }}>
-                <Editor
-                    editorState={editorState}
-                    handleKeyCommand={handleKeyCommand}
-                    keyBindingFn={mapKeyToEditorCommand}
-                    onChange={onChange}
-                />
-            </div>
-        </div>
-    );
+  return (
+    <div style={{ padding: 20 }}>
+      <Editor
+        editorState={editorState}
+        wrapperClassName="demo-wrapper"
+        editorClassName="demo-editor"
+        onEditorStateChange={onEditorStateChange}
+      />
+      <textarea
+        className="demo-content no-focus"
+        disabled
+        value={draftToHtml(convertToRaw(editorState.getCurrentContent()))}
+      />
+    </div>
+  );
 };
 
-export default CustomDraftEditor;
+export default EditorPage;
